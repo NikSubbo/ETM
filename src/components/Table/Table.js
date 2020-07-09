@@ -34,10 +34,16 @@ const useStyles = makeStyles({
     '&:hover': {
       transform: 'scale(1.5)'
     }
-  }
+  },
+  tableRow: {
+    '&:hover': {
+      backgroundColor: '#e8eaf6',
+      cursor: 'pointer'
+    }
+  },
 });
 
-export default function CustomizedTables() {
+export default function CustomizedTables(props) {
   const classes = useStyles();
   const rows = useSelector(state => state.rows)
 
@@ -56,12 +62,10 @@ export default function CustomizedTables() {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <StyledTableRow key={row.id}>
-              <StyledTableCell component="th" scope="row">
-                {row.id}
-              </StyledTableCell>
+            <StyledTableRow className={classes.tableRow} onClick={() => props.history.push(`/catalog/${row.id}`)} key={row.id}>
+              <StyledTableCell scope="row">{row.id}</StyledTableCell>
               <StyledTableCell align="right">
-                  <img className={classes.img} alt="itemPic" src={row.img} />
+                <img className={classes.img} alt="itemPic" src={row.img} />
               </StyledTableCell>
               <StyledTableCell align="right">{row.title}</StyledTableCell>
               <StyledTableCell align="right">{row.vendor}</StyledTableCell>
