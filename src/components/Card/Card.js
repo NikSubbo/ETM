@@ -32,37 +32,35 @@ const useStyles = makeStyles((theme) => ({
 export default function Card(props) {
   const classes = useStyles();
   const rows = useSelector(state => state.rows)
+  const [item] = rows.filter(row => props.match.params.id === row.id)
 
-  for (let i = 0; i < rows.length; i++) {
-    if (props.match.params.id === rows[i].id)
-      return (
-        <Container className={classes.container}>
-          <Paper className={classes.paper}>
-            <Grid container spacing={2}>
-              <Grid item>
-                <img alt="itemPic" src={rows[i].img} className={classes.img} />
-              </Grid>
-              <Grid item>
-                <Typography variant="h6" className={classes.title}>
-                  {rows[i].title}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  id: {rows[i].id}
-                </Typography>
-                <Typography variant="body1">
-                  vendor: {rows[i].vendor} <br />
-                  pack: {rows[i].pack} <br />
-                  price: {rows[i].price} &#8381; <br />
-                </Typography>
-              </Grid>
-            </Grid>
-          </Paper>
-          <Box className={classes.btn}>
-            <Link className={classes.btnLink} to="/catalog">
-              <Button variant="outlined" color="primary">Back to Catalog</Button>
-            </Link>
-          </Box>
-        </Container>
-      )
-  }
+  return (
+    <Container className={classes.container}>
+      <Paper className={classes.paper}>
+        <Grid container spacing={2}>
+          <Grid>
+            <img alt="itemPic" src={item.img} className={classes.img} />
+          </Grid>
+          <Grid>
+            <Typography variant="h6" className={classes.title}>
+              {item.title}
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              id: {item.id}
+            </Typography>
+            <Typography variant="body1">
+              vendor: {item.vendor} <br />
+              pack: {item.pack} <br />
+              price: {item.price} &#8381; <br />
+            </Typography>
+          </Grid>
+        </Grid>
+      </Paper>
+      <Box className={classes.btn}>
+        <Link className={classes.btnLink} to="/catalog">
+          <Button variant="outlined" color="primary">Back to Catalog</Button>
+        </Link>
+      </Box>
+    </Container>
+  )
 }
